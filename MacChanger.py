@@ -23,5 +23,22 @@ def get_arg():
     else:
         return opts
 
+def getCurrentMac(interface):
+    result = subprocess.check_output(['ifconfig',interface])
+    print(result)
+    #return
+    mac_addr = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", str(result))
+    if mac_addr:
+        return mac_addr.group(0)
+    else:
+        print('[-]Sorry mac address not found!')
+
 opts = get_arg()
+current_mac_address = getCurrentMac(opts.interface)
+print('[+] Your current address =: '+ str(current_mac_address))
 changeMac(opts.interface, opts.new_mac) 
+current_mac_address = getCurrentMac(opts.interface)
+if current_mac_address == opts.new_mac:
+    print('[+] mac address being changed sucessfully')
+else:
+    print('[-]Failure')
