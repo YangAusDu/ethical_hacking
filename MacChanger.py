@@ -3,21 +3,18 @@ import re
 import sys
 import optparse
 
+def changeMac(interface, new_mac_addr):
+    print('Changing Mac address for '+ interface + 'to' + new_mac_addr)
+    subprocess.call(['ifconfig', str(interface), 'down'])
+    subprocess.call(['ifconfig', str(interface), 'hw', 'ether', new_mac_addr])
+    subprocess.call(['ifconfig', str(interface), 'up'])
+    subprocess.call('ifconfig', shell = True)
+
+
 parse = optparse.OptionParser()
 parse.add_option('-i','--interface', dest = 'interface', help = "interface to change its MAC address")
-parse.parse_args()
+parse.add_option('-m','--mac', dest = 'new_mac', help = "new mac address")
 
-interface = input('Change mac address for: ')
-new_mac_addr = input('type your new mac address: ')
-print(new_mac_addr)
+(opts, args) = parse.parse_args()
 
-#subprocess.call('ifconfig '+ str(interface) + ' down', shell = True)
-#subprocess.call('ifconfig '+str(interface)+ ' hw ether 01:5d:6c:e8:8d:b2', shell = True)
-#subprocess.call('ifconfig '+ str(interface) + ' up', shell = True)
-#subprocess.call('ifconfig', shell = True)
-
-subprocess.call(['ifconfig', str(interface), 'down'])
-subprocess.call(['ifconfig', str(interface), 'hw', 'ether', new_mac_addr])
-subprocess.call(['ifconfig', str(interface), 'up'])
-subprocess.call('ifconfig', shell = True)
-
+changeMac(opts.interface, opts.new_mac) 
