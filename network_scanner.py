@@ -1,4 +1,7 @@
 import scapy.all as scapy
+import re
+import sys
+import optparse
 
 def scan(ip):
     arp_request = scapy.ARP(pdst = ip)
@@ -22,7 +25,7 @@ def printResult(client_list):
         print(client['ip']+'\t\t'+client['mac'])
     
 def main():
-    ip = "192.168.1.1/24"
+    ip = ""
     client_list = scan(ip)
     printResult(client_list)
 
