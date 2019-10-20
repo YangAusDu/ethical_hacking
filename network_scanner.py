@@ -3,6 +3,15 @@ import re
 import sys
 import optparse
 
+def get_arg():
+    parse = optparse.OptionParser()    
+    parse.add_option('-t','--target', dest = 'target', help = "range of your targeting ip")
+    (opts, args) = parse.parse_args()
+    if not opts.target:
+        parse.error('target incorrect')
+    else:
+        return opts
+
 def scan(ip):
     arp_request = scapy.ARP(pdst = ip)
     #arp_request.show()
@@ -25,7 +34,8 @@ def printResult(client_list):
         print(client['ip']+'\t\t'+client['mac'])
     
 def main():
-    ip = ""
+    opts = get_arg()
+    ip = opts.target
     client_list = scan(ip)
     printResult(client_list)
 
